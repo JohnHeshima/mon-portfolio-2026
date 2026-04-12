@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+  isMailConfigurationError,
+  sendContactNotification,
+} from "@/lib/contact-mailer";
+import {
   contactSchema,
   persistContactSubmission,
 } from "@/lib/contact-store";
@@ -47,11 +51,27 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  await persistContactSubmission(parsed.data, clientIp);
+  const record = await persistContactSubmission(parsed.data, clientIp);
+
+  try {
+    await sendContactNotification(record);
+  } catch (error) {
+    console.error("contact-mail-error", error);
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: isMailConfigurationError(error)
+          ? "La messagerie du portfolio n'est pas encore configurée."
+          : "Le message a ete enregistre, mais l'envoi email a echoue pour le moment.",
+      },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({
     ok: true,
-    message: "Message reçu avec succès. Merci, je vous répondrai rapidement.",
+    message: "Message envoye avec succes. Merci, je vous repondrai rapidement.",
   });
 }
 
