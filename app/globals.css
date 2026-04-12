@@ -2,12 +2,12 @@
 
 /* Global design tokens and the shared canvas used by the whole portfolio. */
 :root {
-  --background: #fcfbff;
+  --background: #f9fcfc;
   --foreground: #0f172a;
   --muted: #64748b;
   --panel: rgba(255, 255, 255, 0.92);
-  --brand: #7c3aed;
-  --brand-soft: #6d28d9;
+  --brand: #0E7490;
+  --brand-soft: #155E75;
 }
 
 @theme inline {
@@ -35,7 +35,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-plus-jakarta-sans), sans-serif;
-  background-image: linear-gradient(180deg, #fffefd 0%, #faf7ff 52%, #fbfdff 100%);
+  background-image: linear-gradient(180deg, #fffefd 0%, #f3fbfb 46%, #f7fcfa 100%);
 }
 
 body::before {
@@ -45,8 +45,8 @@ body::before {
   pointer-events: none;
   opacity: 0.1;
   background-image:
-    linear-gradient(rgba(124, 58, 237, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124, 58, 237, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(15, 108, 116, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 108, 116, 0.04) 1px, transparent 1px);
   background-size: 96px 96px;
   mask-image: radial-gradient(circle at center, black, transparent 84%);
 }
@@ -60,7 +60,7 @@ select {
 }
 
 ::selection {
-  background: rgba(124, 58, 237, 0.18);
+  background: rgba(15, 108, 116, 0.18);
   color: #0f172a;
 }
 
