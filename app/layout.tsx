@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
+import { FirebaseAnalytics } from "@/components/firebase-analytics";
 import "./globals.css";
 
 // The root layout centralizes typography, metadata and the global visual shell.
@@ -60,7 +61,10 @@ export default function RootLayout({
       lang="fr"
       className={`${plusJakartaSans.variable} ${sora.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <FirebaseAnalytics />
+        {children}
+      </body>
     </html>
   );
 }
