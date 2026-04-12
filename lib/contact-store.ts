@@ -8,7 +8,16 @@ export const contactSchema = z.object({
   email: z.email().max(120),
   company: z.string().trim().max(120).optional().default(""),
   service: z.string().trim().min(2).max(80),
+  serviceDetail: z.string().trim().max(160).optional().default(""),
   message: z.string().trim().min(20).max(2000),
+}).superRefine((input, ctx) => {
+  if (input.service === "Autre besoin" && input.serviceDetail.trim().length < 3) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["serviceDetail"],
+      message: "Merci de preciser votre besoin.",
+    });
+  }
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
@@ -33,6 +42,7 @@ export async function persistContactSubmission(
   const record: ContactRecord = {
     ...input,
     company: input.company ?? "",
+    serviceDetail: input.serviceDetail ?? "",
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
     ip,
